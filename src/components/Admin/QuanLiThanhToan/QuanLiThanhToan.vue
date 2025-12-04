@@ -165,7 +165,7 @@
               <div class="manage-left">
                 <img
                   class="qr-img"
-                  src="/src/assets/image/qrMomo.png"
+                  src="/src/assets/image/qrmomo.png"
                   alt="QR Momo 0366818392"
                 />
               </div>
