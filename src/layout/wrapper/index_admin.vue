@@ -1,0 +1,75 @@
+<!-- src/layouts/AdminLayout.vue -->
+<template>
+  <div class="layout" :data-collapsed="isCollapsed">
+    <TopAdmin @toggle-sidebar="toggleSidebar" @logout="handleLogout" />
+    
+    <div class="content-wrapper">
+      <div class="sidebar">
+        <MenuAdmin :collapsed="isCollapsed" @toggle="toggleSidebar" />
+      </div>
+
+      <div class="main">
+        <main class="page-content">
+          <router-view />
+        </main>
+        <!-- <Bot /> -->
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import MenuAdmin from "../components/MenuAdmin.vue";
+import TopAdmin from "../components/TopAdmin.vue";
+import Bot from "../components/Bot.vue";
+
+export default {
+  name: "AdminLayout",
+  components: { MenuAdmin, TopAdmin, Bot },
+  data() { return { isCollapsed: false }; },
+  methods: {
+    toggleSidebar(){ this.isCollapsed = !this.isCollapsed },
+    handleLogout() {
+      localStorage.removeItem('token');
+      localStorage.removeItem('userInfo');
+      localStorage.removeItem('key_client');
+      window.dispatchEvent(new CustomEvent('dkmn:auth-changed', { detail: { isLoggedIn: false } }));
+      this.$router.push('/view/dang-nhap').catch(() => {});
+    }
+  }
+}
+</script>
+
+<style scoped>
+.layout{
+  /* sidebar width controlled here */
+  --sidebar-w: 300px;
+  display: flex;
+  flex-direction: column;
+  background:#f5f7fb;
+  min-height: 100vh;
+}
+.layout[data-collapsed="true"]{ --sidebar-w: 72px; }
+
+/* Content wrapper chứa sidebar và main content */
+.content-wrapper{
+  display: grid;
+  grid-template-columns: var(--sidebar-w) 1fr;
+  flex: 1;
+  min-height: 0;
+}
+
+/* Main content area */
+.main{ 
+  display: flex; 
+  flex-direction: column; 
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.page-content{ 
+  flex: 1; 
+  padding: 20px 30px; 
+  overflow-y: auto; 
+}
+</style>
