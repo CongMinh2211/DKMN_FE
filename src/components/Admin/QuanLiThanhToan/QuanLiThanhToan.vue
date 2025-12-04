@@ -1,6 +1,7 @@
 <template>
   <div class="qltt-page">
     <div class="card p-4 shadow-sm rounded-3">
+      <!-- Force redeploy -->
 
       <!-- ===== PHẦN ĐẦU TRANG ===== -->
       <div class="header-bar d-flex align-items-center justify-content-between flex-wrap mb-3">
